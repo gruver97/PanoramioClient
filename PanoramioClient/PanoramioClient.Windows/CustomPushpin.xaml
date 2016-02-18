@@ -7,9 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    DataContext="{Binding Source={StaticResource Locator}, Path=PushpinViewModel}">
     
-    <Grid Width="100" Height="150" Background="black">
-        <TextBlock Text="Test test test" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-    </Grid>
+    <GridView Background="Black" ItemsSource="{Binding Path=ThumbnailsImages}" Width="300" Height="200">
+        <GridView.ItemTemplate>
+            <DataTemplate>
+                <Image Source="{Binding}" Stretch="UniformToFill" Width="30" Height="30"></Image>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+    </GridView>
 </UserControl>

@@ -29,9 +29,12 @@ namespace PanoramioClient.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
-            _unityContainer.RegisterType<IMapViewModel, MapViewModel>();
+            _unityContainer.RegisterType<IMapViewModel, MapViewModel>()
+                .RegisterType<IPushpinViewModel, PushpinViewModel>();
         }
 
         public IMapViewModel MapViewModel => _unityContainer.Resolve<IMapViewModel>();
+        public IPushpinViewModel PushpinViewModel => _unityContainer.Resolve<PushpinViewModel>();
+
     }
 }
