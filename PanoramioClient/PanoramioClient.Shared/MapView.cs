@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using System;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using PanoramioClient.EventArguments;
@@ -17,7 +18,6 @@ namespace PanoramioClient
 {
     public class MapView : Grid
     {
-        private const string ServiceToken = "At7qRNkt_HfigdbkSKAWQ7lM65smVgQ_DV4lLnKH3mUHMFnHMZOEhX48knVU2IoN";
 #if WINDOWS_APP
         private readonly Map _map = new Map();
 #endif
@@ -28,12 +28,13 @@ namespace PanoramioClient
 
         public MapView()
         {
+            var serviceToken = Application.Current.Resources["BingMapServiceToken"].ToString();
 #if WINDOWS_APP
-            _map.Credentials = ServiceToken;
+            _map.Credentials = serviceToken;
             _map.TappedOverride += _map_TappedOverride;
 #endif
 #if WINDOWS_PHONE_APP
-            _map.MapServiceToken = ServiceToken;
+            _map.MapServiceToken = serviceToken;
             _map.MapTapped += _map_MapTapped;
 #endif
             Children.Add(_map);
@@ -45,12 +46,11 @@ namespace PanoramioClient
             Location clickedLocation = null;
             if (_map.TryPixelToLocation(e.GetPosition(_map), out clickedLocation))
             {
-                OnPositionTapped(
-                    new TappedPositionEventArgs(new BasicGeoposition
-                    {
-                        Latitude = clickedLocation.Latitude,
-                        Longitude = clickedLocation.Longitude
-                    }));
+                LocationTappedCommand.Execute(new BasicGeoposition
+                {
+                    Latitude = clickedLocation.Latitude,
+                    Longitude = clickedLocation.Longitude
+                });
             }
         }
 #endif
@@ -59,7 +59,7 @@ namespace PanoramioClient
 #if WINDOWS_PHONE_APP
         private void _map_MapTapped(MapControl sender, MapInputEventArgs args)
         {
-            OnPositionTapped(new TappedPositionEventArgs(args.Location.Position));
+            LocationTappedCommand.Execute(args.Location.Position);
         }
 #endif
         public double MaxZoomLevel => _map.MaxZoomLevel;
@@ -71,11 +71,13 @@ namespace PanoramioClient
             set { _map.ZoomLevel = value; }
         }
 
-        public event EventHandler<TappedPositionEventArgs> PositionTapped;
+        public static readonly DependencyProperty LocationTappedCommandProperty = DependencyProperty.Register(
+            "LocationTappedCommand", typeof (ICommand), typeof (MapView), new PropertyMetadata(default(ICommand)));
 
-        protected virtual void OnPositionTapped(TappedPositionEventArgs e)
+        public ICommand LocationTappedCommand
         {
-            PositionTapped?.Invoke(this, e);
+            get { return (ICommand) GetValue(LocationTappedCommandProperty); }
+            set { SetValue(LocationTappedCommandProperty, value); }
         }
     }
 }

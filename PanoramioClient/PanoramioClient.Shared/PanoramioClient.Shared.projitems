@@ -18,5 +18,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)BoundingBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventArguments\TappedPositionEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MapView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\IMapViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MapViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
 </Project>

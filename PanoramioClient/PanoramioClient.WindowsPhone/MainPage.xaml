@@ -6,10 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="PanoramioClient.MainPage"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=MapViewModel}">
 
     <Grid>
-        <local:MapView x:Name="PanoramioMap"></local:MapView>
+        <local:MapView x:Name="PanoramioMap" LocationTappedCommand="{Binding Path=LocationTappedCommand}"></local:MapView>
         <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"></SolidColorBrush>
