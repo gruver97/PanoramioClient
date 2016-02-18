@@ -7,6 +7,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -47,14 +48,19 @@ namespace PanoramioClient
 
         private void ZoomInButton_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (PanoramioMap.ZoomLevel == PanoramioMap.MaxZoomLevel) return;
-            PanoramioMap.ZoomLevel++;
+            //if (PanoramioMap.ZoomLevel == PanoramioMap.MaxZoomLevel) return;
+            //PanoramioMap.ZoomLevel++;
         }
 
         private void ZoomOut_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (PanoramioMap.ZoomLevel == PanoramioMap.MinZoomLevel) return;
-            PanoramioMap.ZoomLevel--;
+            //if (PanoramioMap.ZoomLevel == PanoramioMap.MinZoomLevel) return;
+            //PanoramioMap.ZoomLevel--;
+        }
+
+        private void PanoramioMap_OnMapTapped(MapControl sender, MapInputEventArgs args)
+        {
+            throw new NotImplementedException();
         }
     }
 }

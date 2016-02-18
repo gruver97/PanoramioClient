@@ -4,17 +4,18 @@
     xmlns:local="using:PanoramioClient"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     x:Class="PanoramioClient.MainPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Maps:MapControl x:Name="PanoramioMap" MapServiceToken="At7qRNkt_HfigdbkSKAWQ7lM65smVgQ_DV4lLnKH3mUHMFnHMZOEhX48knVU2IoN"
-                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <!--<Maps:MapControl MapTapped="PanoramioMap_OnMapTapped" x:Name="PanoramioMap" MapServiceToken="At7qRNkt_HfigdbkSKAWQ7lM65smVgQ_DV4lLnKH3mUHMFnHMZOEhX48knVU2IoN"
+                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
 
-        </Maps:MapControl>
-        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15">
+
+        <local:MapView></local:MapView>
+
+        <!--<Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"></SolidColorBrush>
             </Border.Background>
@@ -36,6 +37,6 @@
                     <SymbolIcon Symbol="Remove"/>
                 </Button>
             </StackPanel>
-        </Border>
+        </Border>-->
     </Grid>
 </Page>
