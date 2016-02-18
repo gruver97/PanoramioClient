@@ -9,13 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <!--<Maps:MapControl MapTapped="PanoramioMap_OnMapTapped" x:Name="PanoramioMap" MapServiceToken="At7qRNkt_HfigdbkSKAWQ7lM65smVgQ_DV4lLnKH3mUHMFnHMZOEhX48knVU2IoN"
-                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
-
-
-        <local:MapView></local:MapView>
-
-        <!--<Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15">
+        <local:MapView x:Name="PanoramioMap"></local:MapView>
+        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"></SolidColorBrush>
             </Border.Background>
@@ -37,6 +32,6 @@
                     <SymbolIcon Symbol="Remove"/>
                 </Button>
             </StackPanel>
-        </Border>-->
+        </Border>
     </Grid>
 </Page>

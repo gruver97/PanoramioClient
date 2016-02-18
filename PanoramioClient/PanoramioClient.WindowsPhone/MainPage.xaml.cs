@@ -48,14 +48,14 @@ namespace PanoramioClient
 
         private void ZoomInButton_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            //if (PanoramioMap.ZoomLevel == PanoramioMap.MaxZoomLevel) return;
-            //PanoramioMap.ZoomLevel++;
+            if (PanoramioMap.ZoomLevel == PanoramioMap.MaxZoomLevel) return;
+            PanoramioMap.ZoomLevel++;
         }
 
         private void ZoomOut_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            //if (PanoramioMap.ZoomLevel == PanoramioMap.MinZoomLevel) return;
-            //PanoramioMap.ZoomLevel--;
+            if (PanoramioMap.ZoomLevel == PanoramioMap.MinZoomLevel) return;
+            PanoramioMap.ZoomLevel--;
         }
 
         private void PanoramioMap_OnMapTapped(MapControl sender, MapInputEventArgs args)
