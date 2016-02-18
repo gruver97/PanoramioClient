@@ -35,9 +35,21 @@ namespace PanoramioClient
 #if WINDOWS_PHONE_APP
             _map.MapServiceToken = serviceToken;
             _map.MapTapped += _map_MapTapped;
-            _map.DoubleTappedOverride += _map_DoubleTappedOverride;
+            _map.MapTapped += _map_MapTapped1;
+            _map.MapDoubleTapped += _map_MapDoubleTapped;
 #endif
             Children.Add(_map);
+        }
+
+        private void _map_MapDoubleTapped(MapControl sender, MapInputEventArgs args)
+        {
+            
+        }
+
+        private void _map_MapTapped1(MapControl sender, MapInputEventArgs args)
+        {
+            AddPushpin(args.Location.Position);
+            LocationTappedCommand?.Execute(args.Location.Position);
         }
 
         private void _map_DoubleTappedOverride(object sender, DoubleTappedRoutedEventArgs e)
@@ -45,10 +57,11 @@ namespace PanoramioClient
             e.Handled = true;
         }
 
-#if WINDOWS_APP
+
         private void _map_TappedOverride(object sender, TappedRoutedEventArgs e)
         {
-            Location clickedLocation = null;
+#if WINDOWS_APP
+             Location clickedLocation = null;
             if (_map.TryPixelToLocation(e.GetPosition(_map), out clickedLocation))
             {
                 var basicPosition = new BasicGeoposition
@@ -59,9 +72,10 @@ namespace PanoramioClient
                 LocationTappedCommand.Execute(basicPosition);
                 AddPushpin(basicPosition);
             }
+#endif
             e.Handled = true;
         }
-#endif
+
 
 
 #if WINDOWS_PHONE_APP
@@ -97,6 +111,10 @@ namespace PanoramioClient
             MapLayer.SetPosition(pushpin, location1);
             _map.Children.Add(pushpin);
 #endif
+            var pushPin = new ImagePushpin();
+            _map.Center = new Geopoint(location);
+            MapControl.SetLocation(pushPin, _map.Center);
+            _map.Children.Add(pushPin);
         }
     }
 }
