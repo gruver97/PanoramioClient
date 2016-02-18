@@ -2,13 +2,11 @@
 using Windows.UI.Xaml.Controls.Maps;
 
 #endif
-using System;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using PanoramioClient.EventArguments;
 #if WINDOWS_APP
 using Bing.Maps;
 
@@ -46,11 +44,13 @@ namespace PanoramioClient
             Location clickedLocation = null;
             if (_map.TryPixelToLocation(e.GetPosition(_map), out clickedLocation))
             {
-                LocationTappedCommand.Execute(new BasicGeoposition
+                var basicPosition = new BasicGeoposition
                 {
                     Latitude = clickedLocation.Latitude,
                     Longitude = clickedLocation.Longitude
-                });
+                };
+                LocationTappedCommand.Execute(basicPosition);
+                AddPushpin(basicPosition);
             }
         }
 #endif
@@ -78,6 +78,17 @@ namespace PanoramioClient
         {
             get { return (ICommand) GetValue(LocationTappedCommandProperty); }
             set { SetValue(LocationTappedCommandProperty, value); }
+        }
+
+        private void AddPushpin(BasicGeoposition location)
+        {
+            _map.Children.Clear();
+#if WINDOWS_APP
+            var pushpin = new CustomPushpin();
+            var location1 = _map.Center = new Location {Latitude = location.Latitude, Longitude = location.Longitude};
+            MapLayer.SetPosition(pushpin, location1);
+            _map.Children.Add(pushpin);
+#endif
         }
     }
 }
