@@ -30,12 +30,19 @@ namespace PanoramioClient
 #if WINDOWS_APP
             _map.Credentials = serviceToken;
             _map.TappedOverride += _map_TappedOverride;
+            _map.DoubleTappedOverride += _map_DoubleTappedOverride;
 #endif
 #if WINDOWS_PHONE_APP
             _map.MapServiceToken = serviceToken;
             _map.MapTapped += _map_MapTapped;
+            _map.DoubleTappedOverride += _map_DoubleTappedOverride;
 #endif
             Children.Add(_map);
+        }
+
+        private void _map_DoubleTappedOverride(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            e.Handled = true;
         }
 
 #if WINDOWS_APP
@@ -52,6 +59,7 @@ namespace PanoramioClient
                 LocationTappedCommand.Execute(basicPosition);
                 AddPushpin(basicPosition);
             }
+            e.Handled = true;
         }
 #endif
 

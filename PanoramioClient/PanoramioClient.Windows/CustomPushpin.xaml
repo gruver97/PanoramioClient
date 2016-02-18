@@ -10,11 +10,11 @@
     d:DesignWidth="400"
     DataContext="{Binding Source={StaticResource Locator}, Path=PushpinViewModel}">
     
-    <GridView Background="Black" ItemsSource="{Binding Path=ThumbnailsImages}" Width="300" Height="200">
-        <GridView.ItemTemplate>
+    <FlipView Tapped="UIElement_OnTapped" ItemsSource="{Binding Path=ThumbnailsImages}" Width="300" Height="200">
+        <FlipView.ItemTemplate>
             <DataTemplate>
-                <Image Source="{Binding}" Stretch="UniformToFill" Width="30" Height="30"></Image>
+                <Image Source="{Binding}" Stretch="UniformToFill"></Image>
             </DataTemplate>
-        </GridView.ItemTemplate>
-    </GridView>
+        </FlipView.ItemTemplate>
+    </FlipView>
 </UserControl>
