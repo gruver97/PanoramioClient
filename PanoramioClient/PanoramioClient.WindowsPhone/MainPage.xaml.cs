@@ -44,5 +44,17 @@ namespace PanoramioClient
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
         }
+
+        private void ZoomInButton_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (PanoramioMap.ZoomLevel == PanoramioMap.MaxZoomLevel) return;
+            PanoramioMap.ZoomLevel++;
+        }
+
+        private void ZoomOut_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (PanoramioMap.ZoomLevel == PanoramioMap.MinZoomLevel) return;
+            PanoramioMap.ZoomLevel--;
+        }
     }
 }
