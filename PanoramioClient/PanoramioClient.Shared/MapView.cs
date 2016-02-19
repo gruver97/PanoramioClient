@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls.Maps;
 #endif
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -99,12 +100,14 @@ namespace PanoramioClient
             var pushpin = new CustomPushpin(location);
             var location1 = _map.Center = new Location {Latitude = location.Latitude, Longitude = location.Longitude};
             MapLayer.SetPosition(pushpin, location1);
+            MapLayer.SetPositionAnchor(pushpin, new Point() {X = 0, Y = 300});
             _map.Children.Add(pushpin);
 #endif
 #if WINDOWS_PHONE_APP
             var pushPin = new ImagePushpin(location);
             _map.Center = new Geopoint(location);
             MapControl.SetLocation(pushPin, _map.Center);
+            MapControl.SetNormalizedAnchorPoint(pushPin, new Point() { X = 0.5, Y = 1 });
             _map.Children.Add(pushPin);
 #endif
 

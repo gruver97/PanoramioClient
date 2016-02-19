@@ -10,12 +10,13 @@
     d:DesignWidth="400"
     DataContext="{Binding Source={StaticResource Locator}, Path=PushpinViewModel}"
     Loaded="ImagePushpin_OnLoaded">
-
-    <FlipView ItemsSource="{Binding Path=ThumbnailsImages}" HorizontalAlignment="Stretch" Height="200">
-        <FlipView.ItemTemplate>
-            <DataTemplate>
-                <Image Source="{Binding}" Stretch="UniformToFill"></Image>
-            </DataTemplate>
-        </FlipView.ItemTemplate>
-    </FlipView>
+    <Border Canvas.ZIndex="1" Width="300" Height="300"  Background="WhiteSmoke" BorderBrush="Black" BorderThickness="5">
+        <FlipView Canvas.ZIndex="0"  ItemsSource="{Binding Path=ThumbnailsImages}">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}" Stretch="UniformToFill" />
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+        </Border>
 </UserControl>

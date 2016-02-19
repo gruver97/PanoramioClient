@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using Windows.Devices.Geolocation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using PanoramioClient.ViewModel;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
@@ -21,16 +9,16 @@ namespace PanoramioClient
 {
     public sealed partial class ImagePushpin : UserControl
     {
-        private BasicGeoposition _location;
+        private readonly BasicGeoposition _location;
 
         public ImagePushpin()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-        public ImagePushpin(BasicGeoposition location):this()
+        public ImagePushpin(BasicGeoposition location) : this()
         {
-            this._location = location;
+            _location = location;
         }
 
         private async void ImagePushpin_OnLoaded(object sender, RoutedEventArgs e)

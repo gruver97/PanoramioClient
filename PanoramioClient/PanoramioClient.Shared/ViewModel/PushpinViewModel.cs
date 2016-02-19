@@ -11,8 +11,8 @@ namespace PanoramioClient.ViewModel
 {
     public class PushpinViewModel : ViewModelBase, IPushpinViewModel
     {
-        private readonly IPanoramioService _panoramioService;
         private readonly Task _initializeTask;
+        private readonly IPanoramioService _panoramioService;
 
         public PushpinViewModel([Dependency] IPanoramioService panoramioService)
         {
@@ -21,10 +21,14 @@ namespace PanoramioClient.ViewModel
         }
 
         public ObservableCollection<BitmapImage> ThumbnailsImages { get; }
+
         public async Task LoadImagesAsync(BasicGeoposition location)
         {
-            var bounding = new BoundingBox(location,0.001,0.001);
-            var result = await _panoramioService.GetImagesUrlAsync(bounding.MinX, bounding.MaxX, bounding.MinY, bounding.MaxY).ConfigureAwait(true);
+            var bounding = new BoundingBox(location, 0.01, 0.01);
+            var result =
+                await
+                    _panoramioService.GetImagesUrlAsync(bounding.MinX, bounding.MaxX, bounding.MinY, bounding.MaxY)
+                        .ConfigureAwait(true);
             if (result != null)
             {
                 ThumbnailsImages.Clear();
