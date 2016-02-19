@@ -1,13 +1,14 @@
 ﻿using System;
 using Windows.ApplicationModel.Core;
-using Windows.Devices.Sensors;
 using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Media.Imaging;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.Unity;
 using PanoramioClient.Enumerations;
+
 #if WINDOWS_PHONE_APP
 using Windows.Phone.UI.Input;
 #endif
@@ -21,7 +22,6 @@ namespace PanoramioClient.ViewModel
         private BitmapImage _source;
 #if WINDOWS_PHONE_APP
         private SimpleOrientationSensor _simpleOrientationSensor;
-
 #endif
 
         public FullSizePhotoViewModel([Dependency] INavigationService navigationService)
@@ -38,15 +38,19 @@ namespace PanoramioClient.ViewModel
             }
 #endif
 #if WINDOWS_APP
+            GoBackCommand = new RelayCommand(() => _navigationService.GoBack());
             SetOrientationState(DisplayInformation.GetForCurrentView().CurrentOrientation);
             DisplayInformation.GetForCurrentView().OrientationChanged += FullSizePhotoViewModel_OrientationChanged;
 #endif
         }
 
+#if WINDOWS_APP
         private void FullSizePhotoViewModel_OrientationChanged(DisplayInformation sender, object args)
         {
             SetOrientationState(DisplayInformation.GetForCurrentView().CurrentOrientation);
         }
+#endif
+
 
         public BitmapImage Source
         {
@@ -69,6 +73,11 @@ namespace PanoramioClient.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+#if WINDOWS_APP
+        public RelayCommand GoBackCommand { get; }
+
+#endif
 #if WINDOWS_APP
         private async void SetOrientationState(DisplayOrientations orientation)
         {

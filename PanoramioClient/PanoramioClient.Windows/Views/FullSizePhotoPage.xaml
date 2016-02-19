@@ -11,6 +11,7 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=FullSizePhotoViewModel}">
 
     <Grid>
+        <Button Style="{StaticResource NavigationBackButtonNormalStyle}" Margin="19" Command="{Binding Path=GoBackCommand}"></Button>
         <Image x:Name="FullSizeImage" Source="{Binding Path=Source}" Stretch="None" HorizontalAlignment="Center"
                VerticalAlignment="Center" />
         <VisualStateManager.VisualStateGroups>
@@ -19,7 +20,7 @@
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FullSizeImage"
                                                        Storyboard.TargetProperty="Stretch">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Uniform" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="None" />
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
@@ -27,7 +28,7 @@
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FullSizeImage"
                                                        Storyboard.TargetProperty="Stretch">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="None" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Uniform" />
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
