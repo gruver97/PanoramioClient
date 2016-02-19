@@ -11,7 +11,7 @@ namespace PanoramioClient
     public sealed partial class ImagePushpin : UserControl
     {
         private readonly BasicGeoposition _location;
-
+        private bool _isLoaded = false;
         public ImagePushpin()
         {
             InitializeComponent();
@@ -24,9 +24,13 @@ namespace PanoramioClient
 
         private async void ImagePushpin_OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (_isLoaded) return;
             var pushpinViewModel = DataContext as IPushpinViewModel;
             if (pushpinViewModel != null)
+            {
+                _isLoaded = true;
                 await pushpinViewModel.LoadImagesAsync(_location).ConfigureAwait(true);
+            }
         }
     }
 }

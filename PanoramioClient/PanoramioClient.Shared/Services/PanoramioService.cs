@@ -36,7 +36,8 @@ namespace PanoramioClient.Services
             const string methodPart = "/map/get_panoramas.php?set=full&from=0&to=100&minx={0}&miny={1}&maxx={2}&maxy={3}&size=medium&mapfilter=true";
             try
             {
-                var requestAddress = new Uri(new Uri(PanoramioBaseAddress), string.Format(methodPart,minX,minY,maxX,maxY));
+                var requestAddress = new Uri(new Uri(PanoramioBaseAddress),
+                    string.Format(methodPart, minX, minY, maxX, maxY));
                 var response = await _httpClient.GetAsync(requestAddress);
                 if (response.IsSuccessStatusCode)
                 {
@@ -46,10 +47,17 @@ namespace PanoramioClient.Services
                 }
                 return null;
             }
-            catch (HttpRequestException httpRequestException)
+            catch (HttpRequestException)
             {
-                
-                throw;
+                return null;
+            }
+            catch (JsonException)
+            {
+                return null;
+            }
+            catch (FormatException)
+            {
+                return null;
             }
         }
 
