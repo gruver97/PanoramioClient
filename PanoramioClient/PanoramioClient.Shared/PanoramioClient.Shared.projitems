@@ -15,9 +15,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ChangeVisualStateBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\OrientationBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BoundingBox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ChangeVisualStateBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumerations\LoadingStatesEnumeration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enumerations\OrientationEnumeration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventArguments\TappedPositionEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MapView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\PhotoDescription.cs" />

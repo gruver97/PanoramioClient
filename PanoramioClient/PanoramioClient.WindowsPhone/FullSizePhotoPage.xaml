@@ -5,10 +5,37 @@
     xmlns:local="using:PanoramioClient"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:PanoramioClient.Behaviors"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource Locator}, Path=FullSizePhotoViewModel}">
 
-    <Image Source="{Binding Path=Source}" Stretch="UniformToFill" HorizontalAlignment="Center"
-           VerticalAlignment="Center" />
+    <Grid>
+        <Image x:Name="FullSizeImage" Source="{Binding Path=Source}" Stretch="None" HorizontalAlignment="Center"
+               VerticalAlignment="Center" />
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="OrientationGroup">
+                <VisualState x:Name="Portrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FullSizeImage"
+                                                       Storyboard.TargetProperty="Stretch">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="None" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Landscape">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FullSizeImage"
+                                                       Storyboard.TargetProperty="Stretch">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Uniform" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+    <interactivity:Interaction.Behaviors>
+        <behaviors:OrientationBehavior  Orientation="{Binding Path=CurrentOrientation}"/>
+    </interactivity:Interaction.Behaviors>
 </Page>

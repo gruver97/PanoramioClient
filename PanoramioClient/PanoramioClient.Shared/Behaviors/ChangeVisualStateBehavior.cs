@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
 using PanoramioClient.Enumerations;
 
-namespace PanoramioClient
+namespace PanoramioClient.Behaviors
 {
     public class ChangeVisualStateBehavior : DependencyObject, IBehavior
     {
@@ -23,7 +23,7 @@ namespace PanoramioClient
             var control = associatedObject as Control;
             if (control == null)
                 throw new ArgumentException(
-                    "EnumStateBehavior can be attached only to Control");
+                    "ChangeVisualStateBehavior can be attached only to Control");
 
             AssociatedObject = associatedObject;
         }

@@ -73,7 +73,6 @@ namespace PanoramioClient
                     Latitude = clickedLocation.Latitude,
                     Longitude = clickedLocation.Longitude
                 };
-                LocationTappedCommand.Execute(basicPosition);
                 AddPushpin(basicPosition);
             }
 #endif
