@@ -32,9 +32,7 @@ namespace PanoramioClient.ViewModel
         public ViewModelLocator()
         {
             var navigationService = new NavigationService();
-#if WINDOWS_PHONE_APP
-            navigationService.Configure("FullSizePhotoPage", typeof(FullSizePhotoPage));
-#endif
+            navigationService.Configure("FullSizePhotoPage", typeof(Views.FullSizePhotoPage));
             _unityContainer.RegisterType<IPushpinViewModel, PushpinViewModel>()
                 .RegisterType<IFullSizePhotoViewModel, FullSizePhotoViewModel>()
                 .RegisterType<IPanoramioService, PanoramioService>()

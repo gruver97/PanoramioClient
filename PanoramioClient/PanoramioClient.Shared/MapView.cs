@@ -34,7 +34,6 @@ namespace PanoramioClient
 #if WINDOWS_APP
             _map.Credentials = serviceToken;
             _map.TappedOverride += _map_TappedOverride;
-            _map.DoubleTappedOverride += _map_DoubleTappedOverride;
             _map.Center = new Location(55.888050, 37.661628);
 #endif
 #if WINDOWS_PHONE_APP
@@ -56,10 +55,6 @@ namespace PanoramioClient
             AddPushpin(args.Location.Position);
         }
 #endif
-        private void _map_DoubleTappedOverride(object sender, DoubleTappedRoutedEventArgs e)
-        {
-            e.Handled = true;
-        }
 
 
         private void _map_TappedOverride(object sender, TappedRoutedEventArgs e)
@@ -76,7 +71,7 @@ namespace PanoramioClient
                 AddPushpin(basicPosition);
             }
 #endif
-            e.Handled = true;
+            e.Handled = false;
         }
 
 
@@ -100,7 +95,7 @@ namespace PanoramioClient
             _map.Children.Add(pushpin);
 #endif
 #if WINDOWS_PHONE_APP
-            var pushPin = new ImagePushpin(location);
+            var pushPin = new Views.ImagePushpin(location);
             _map.Center = new Geopoint(location);
             MapControl.SetLocation(pushPin, _map.Center);
             MapControl.SetNormalizedAnchorPoint(pushPin, new Point() { X = 0.5, Y = 1 });

@@ -1,17 +1,16 @@
 ﻿using System;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Store;
 using Windows.Devices.Sensors;
+using Windows.Graphics.Display;
 using Windows.UI.Core;
-#if WINDOWS_PHONE_APP
-using Windows.Phone.UI.Input;
-#endif
-
 using Windows.UI.Xaml.Media.Imaging;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.Unity;
 using PanoramioClient.Enumerations;
+#if WINDOWS_PHONE_APP
+using Windows.Phone.UI.Input;
+#endif
 
 namespace PanoramioClient.ViewModel
 {
@@ -20,11 +19,15 @@ namespace PanoramioClient.ViewModel
         private readonly INavigationService _navigationService;
         private OrientationEnumeration _currentOrientation;
         private BitmapImage _source;
+#if WINDOWS_PHONE_APP
         private SimpleOrientationSensor _simpleOrientationSensor;
+
+#endif
 
         public FullSizePhotoViewModel([Dependency] INavigationService navigationService)
         {
             _navigationService = navigationService;
+
 #if WINDOWS_PHONE_APP
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
             _simpleOrientationSensor = SimpleOrientationSensor.GetDefault();
@@ -34,6 +37,15 @@ namespace PanoramioClient.ViewModel
                 SetOrientationState(_simpleOrientationSensor.GetCurrentOrientation());
             }
 #endif
+#if WINDOWS_APP
+            SetOrientationState(DisplayInformation.GetForCurrentView().CurrentOrientation);
+            DisplayInformation.GetForCurrentView().OrientationChanged += FullSizePhotoViewModel_OrientationChanged;
+#endif
+        }
+
+        private void FullSizePhotoViewModel_OrientationChanged(DisplayInformation sender, object args)
+        {
+            SetOrientationState(DisplayInformation.GetForCurrentView().CurrentOrientation);
         }
 
         public BitmapImage Source
@@ -57,8 +69,28 @@ namespace PanoramioClient.ViewModel
                 RaisePropertyChanged();
             }
         }
-
+#if WINDOWS_APP
+        private async void SetOrientationState(DisplayOrientations orientation)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                switch (orientation)
+                {
+                    case DisplayOrientations.None:
+                        CurrentOrientation = OrientationEnumeration.Landscape;
+                        break;
+                    case DisplayOrientations.Landscape:
+                        CurrentOrientation = OrientationEnumeration.Landscape;
+                        break;
+                    case DisplayOrientations.Portrait:
+                        CurrentOrientation = OrientationEnumeration.Portrait;
+                        break;
+                }
+            });
+        }
+#endif
 #if WINDOWS_PHONE_APP
+
         private void FullSizePhotoViewModel_OrientationChanged(SimpleOrientationSensor sender,
             SimpleOrientationSensorOrientationChangedEventArgs args)
         {
