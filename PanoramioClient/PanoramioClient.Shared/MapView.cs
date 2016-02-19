@@ -35,15 +35,16 @@ namespace PanoramioClient
             _map.Credentials = serviceToken;
             _map.TappedOverride += _map_TappedOverride;
             _map.DoubleTappedOverride += _map_DoubleTappedOverride;
+            _map.Center = new Location(55.888050, 37.661628);
 #endif
 #if WINDOWS_PHONE_APP
             _map.MapServiceToken = serviceToken;
             _map.MapTapped += _map_MapTapped;
+            _map.Center = new Geopoint(new BasicGeoposition() { Latitude = 55.888050, Longitude = 37.661628 });
 #endif
             _map.ZoomLevel = (_map.MaxZoomLevel - 5) >= _map.MinZoomLevel
                 ? _map.MaxZoomLevel - 5
                 : _map.MinZoomLevel;
-            _map.Center = new Geopoint(new BasicGeoposition() { Latitude = 55.888050, Longitude = 37.661628 });
             Children.Add(_map);
         }
 

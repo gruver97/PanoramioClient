@@ -5,6 +5,8 @@
     xmlns:local="using:PanoramioClient"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:userControls="using:PanoramioClient.UserControls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -12,12 +14,73 @@
     Loaded="CustomPushpin_OnLoaded">
 
     <Border Width="500" Height="300" BorderBrush="Black" BorderThickness="5" Background="WhiteSmoke">
-        <FlipView Tapped="UIElement_OnTapped" ItemsSource="{Binding Path=ThumbnailsImages}">
-            <FlipView.ItemTemplate>
-                <DataTemplate>
-                    <Image Source="{Binding}" Stretch="UniformToFill" />
-                </DataTemplate>
-            </FlipView.ItemTemplate>
-        </FlipView>
+        <Grid>
+            <ProgressRing x:Name="ProgressRing" IsActive="True" Visibility="Collapsed" />
+            <Image x:Name="ErrorImage" Visibility="Collapsed" Source="ms-appx:///Assets/noData.png"
+                   Stretch="UniformToFill" />
+            <FlipView x:Name="LoadedImagesFlip" Tapped="LoadedImagesFlip_OnTapped" ItemsSource="{Binding Path=ThumbnailsImages}">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <userControls:ImageWithIndicator ImageUri="{Binding Mode=TwoWay}" />
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+        </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Loading">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ProgressRing"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadedImagesFlip"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorImage"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Loaded">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ProgressRing"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadedImagesFlip"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorImage"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Error">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ProgressRing"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadedImagesFlip"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorImage"
+                                                           Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Border>
+    <interactivity:Interaction.Behaviors>
+        <local:ChangeVisualStateBehavior State="{Binding Path=LoadingStates}" />
+    </interactivity:Interaction.Behaviors>
+
 </UserControl>
