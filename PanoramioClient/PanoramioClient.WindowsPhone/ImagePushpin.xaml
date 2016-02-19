@@ -5,18 +5,19 @@
     xmlns:local="using:PanoramioClient"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="using:PanoramioClient.UserControls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     DataContext="{Binding Source={StaticResource Locator}, Path=PushpinViewModel}"
     Loaded="ImagePushpin_OnLoaded">
-    <Border Canvas.ZIndex="1" Width="300" Height="300"  Background="WhiteSmoke" BorderBrush="Black" BorderThickness="5">
-        <FlipView Canvas.ZIndex="0"  ItemsSource="{Binding Path=ThumbnailsImages}">
+    <Border  Width="300" Height="300" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="5">
+        <FlipView ItemsSource="{Binding Path=ThumbnailsImages}">
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding}" Stretch="UniformToFill" />
+                    <userControls:ImageWithIndicator ImageUri="{Binding Mode=TwoWay}"></userControls:ImageWithIndicator>
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
-        </Border>
+    </Border>
 </UserControl>

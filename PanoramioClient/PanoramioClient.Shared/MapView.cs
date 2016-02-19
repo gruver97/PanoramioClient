@@ -1,4 +1,6 @@
-﻿#if WINDOWS_PHONE_APP
+﻿
+using System;
+#if WINDOWS_PHONE_APP
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 #endif
@@ -38,10 +40,14 @@ namespace PanoramioClient
             _map.MapServiceToken = serviceToken;
             _map.MapTapped += _map_MapTapped;
 #endif
+            _map.ZoomLevel = (_map.MaxZoomLevel - 5) >= _map.MinZoomLevel
+                ? _map.MaxZoomLevel - 5
+                : _map.MinZoomLevel;
+            _map.Center = new Geopoint(new BasicGeoposition() { Latitude = 55.888050, Longitude = 37.661628 });
             Children.Add(_map);
         }
 
-
+        
 #if WINDOWS_PHONE_APP
 
         private void _map_MapTapped(MapControl sender, MapInputEventArgs args)

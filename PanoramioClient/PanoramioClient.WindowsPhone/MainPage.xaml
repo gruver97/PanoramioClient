@@ -4,13 +4,15 @@
     xmlns:local="using:PanoramioClient"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:geolocation="using:Windows.Devices.Geolocation"
     x:Class="PanoramioClient.MainPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource Locator}, Path=MapViewModel}">
 
     <Grid>
-        <local:MapView x:Name="PanoramioMap" LocationTappedCommand="{Binding Path=LocationTappedCommand}"></local:MapView>
+        <local:MapView x:Name="PanoramioMap" LocationTappedCommand="{Binding Path=LocationTappedCommand}">
+        </local:MapView>
         <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"></SolidColorBrush>

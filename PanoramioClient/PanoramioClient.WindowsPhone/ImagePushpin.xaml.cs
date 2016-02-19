@@ -27,5 +27,7 @@ namespace PanoramioClient
             if (pushpinViewModel != null)
                 await pushpinViewModel.LoadImagesAsync(_location).ConfigureAwait(true);
         }
+
+
     }
 }
