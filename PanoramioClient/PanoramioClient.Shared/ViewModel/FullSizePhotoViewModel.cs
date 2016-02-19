@@ -1,4 +1,8 @@
-﻿using Windows.Devices.Sensors;
+﻿using System;
+using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Store;
+using Windows.Devices.Sensors;
+using Windows.UI.Core;
 #if WINDOWS_PHONE_APP
 using Windows.Phone.UI.Input;
 #endif
@@ -16,16 +20,18 @@ namespace PanoramioClient.ViewModel
         private readonly INavigationService _navigationService;
         private OrientationEnumeration _currentOrientation;
         private BitmapImage _source;
+        private SimpleOrientationSensor _simpleOrientationSensor;
 
         public FullSizePhotoViewModel([Dependency] INavigationService navigationService)
         {
             _navigationService = navigationService;
 #if WINDOWS_PHONE_APP
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-            if (SimpleOrientationSensor.GetDefault() != null)
+            _simpleOrientationSensor = SimpleOrientationSensor.GetDefault();
+            if (_simpleOrientationSensor != null)
             {
-                SimpleOrientationSensor.GetDefault().OrientationChanged += FullSizePhotoViewModel_OrientationChanged;
-                SetOrientationState(SimpleOrientationSensor.GetDefault().GetCurrentOrientation());
+                _simpleOrientationSensor.OrientationChanged += FullSizePhotoViewModel_OrientationChanged;
+                SetOrientationState(_simpleOrientationSensor.GetCurrentOrientation());
             }
 #endif
         }
@@ -59,28 +65,32 @@ namespace PanoramioClient.ViewModel
             SetOrientationState(args.Orientation);
         }
 
-        private void SetOrientationState(SimpleOrientation orientation)
+        private async void SetOrientationState(SimpleOrientation orientation)
         {
-            switch (orientation)
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, ()=>
             {
-                case SimpleOrientation.NotRotated:
-                    CurrentOrientation = OrientationEnumeration.Portrait;
-                    break;
-                case SimpleOrientation.Rotated90DegreesCounterclockwise:
-                    CurrentOrientation = OrientationEnumeration.Landscape;
-                    break;
-                case SimpleOrientation.Rotated180DegreesCounterclockwise:
-                    CurrentOrientation = OrientationEnumeration.Portrait;
-                    break;
-                case SimpleOrientation.Rotated270DegreesCounterclockwise:
-                    CurrentOrientation = OrientationEnumeration.Landscape;
-                    break;
-            }
+                switch (orientation)
+                {
+                    case SimpleOrientation.NotRotated:
+                        CurrentOrientation = OrientationEnumeration.Portrait;
+                        break;
+                    case SimpleOrientation.Rotated90DegreesCounterclockwise:
+                        CurrentOrientation = OrientationEnumeration.Landscape;
+                        break;
+                    case SimpleOrientation.Rotated180DegreesCounterclockwise:
+                        CurrentOrientation = OrientationEnumeration.Portrait;
+                        break;
+                    case SimpleOrientation.Rotated270DegreesCounterclockwise:
+                        CurrentOrientation = OrientationEnumeration.Landscape;
+                        break;
+                }
+            });
         }
 
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
             _navigationService.GoBack();
+            _simpleOrientationSensor.OrientationChanged -= FullSizePhotoViewModel_OrientationChanged;
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
             e.Handled = true;
         }

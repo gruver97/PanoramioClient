@@ -9,7 +9,7 @@ namespace PanoramioClient.Behaviors
     public class OrientationBehavior : DependencyObject, IBehavior
     {
         public static readonly DependencyProperty PropertyTypeProperty = DependencyProperty.Register(
-            "PropertyType", typeof (OrientationEnumeration), typeof (OrientationBehavior),
+            "Orientation", typeof (OrientationEnumeration), typeof (OrientationBehavior),
             new PropertyMetadata(default(OrientationEnumeration), PropertyChangedCallback));
 
         public OrientationEnumeration Orientation
@@ -40,7 +40,7 @@ namespace PanoramioClient.Behaviors
         {
             var behavior = dependencyObject as OrientationBehavior;
             if (behavior.AssociatedObject == null) return;
-            var result = VisualStateManager.GoToState(behavior.AssociatedObject as Control,
+            VisualStateManager.GoToState(behavior.AssociatedObject as Control,
                 dependencyPropertyChangedEventArgs.NewValue.ToString(), false);
         }
     }

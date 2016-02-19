@@ -90,6 +90,6 @@
         </VisualStateManager.VisualStateGroups>
     </Border>
     <interactivity:Interaction.Behaviors>
-        <panoramioClient:ChangeVisualStateBehavior State="{Binding Path=LoadingStates}" />
+        <local:ChangeVisualStateBehavior State="{Binding Path=LoadingStates}" />
     </interactivity:Interaction.Behaviors>
 </UserControl>
