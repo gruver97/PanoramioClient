@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace PanoramioClient.Model
 {
@@ -29,15 +30,15 @@ namespace PanoramioClient.Model
         public double Height { get; set; }
 
         [JsonProperty("upload_date")]
-        public double UploadDate { get; set; }
+        public DateTime UploadDate { get; set; }
 
         [JsonProperty("owner_id")]
         public double OwnerId { get; set; }
 
         [JsonProperty("owner_name")]
-        public double OwnerName { get; set; }
+        public string OwnerName { get; set; }
 
         [JsonProperty("owner_url")]
-        public double OwnerUrl { get; set; }
+        public string OwnerUrl { get; set; }
     }
 }

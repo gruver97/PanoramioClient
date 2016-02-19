@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)MapView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\PhotoDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IPanoramioService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\PanoramioService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\IMapViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\IPushpinViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MapViewModel.cs" />

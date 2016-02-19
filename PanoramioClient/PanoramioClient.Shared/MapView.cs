@@ -1,12 +1,13 @@
 ﻿#if WINDOWS_PHONE_APP
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
-
 #endif
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+
 #if WINDOWS_APP
 using Bing.Maps;
 
@@ -35,23 +36,19 @@ namespace PanoramioClient
 #if WINDOWS_PHONE_APP
             _map.MapServiceToken = serviceToken;
             _map.MapTapped += _map_MapTapped;
-            _map.MapTapped += _map_MapTapped1;
-            _map.MapDoubleTapped += _map_MapDoubleTapped;
 #endif
             Children.Add(_map);
         }
 
-        private void _map_MapDoubleTapped(MapControl sender, MapInputEventArgs args)
-        {
-            
-        }
 
-        private void _map_MapTapped1(MapControl sender, MapInputEventArgs args)
+#if WINDOWS_PHONE_APP
+
+        private void _map_MapTapped(MapControl sender, MapInputEventArgs args)
         {
             AddPushpin(args.Location.Position);
             LocationTappedCommand?.Execute(args.Location.Position);
         }
-
+#endif
         private void _map_DoubleTappedOverride(object sender, DoubleTappedRoutedEventArgs e)
         {
             e.Handled = true;
@@ -77,13 +74,6 @@ namespace PanoramioClient
         }
 
 
-
-#if WINDOWS_PHONE_APP
-        private void _map_MapTapped(MapControl sender, MapInputEventArgs args)
-        {
-            LocationTappedCommand.Execute(args.Location.Position);
-        }
-#endif
         public double MaxZoomLevel => _map.MaxZoomLevel;
         public double MinZoomLevel => _map.MinZoomLevel;
 
@@ -106,15 +96,18 @@ namespace PanoramioClient
         {
             _map.Children.Clear();
 #if WINDOWS_APP
-            var pushpin = new CustomPushpin();
+            var pushpin = new CustomPushpin(location);
             var location1 = _map.Center = new Location {Latitude = location.Latitude, Longitude = location.Longitude};
             MapLayer.SetPosition(pushpin, location1);
             _map.Children.Add(pushpin);
 #endif
-            var pushPin = new ImagePushpin();
+#if WINDOWS_PHONE_APP
+            var pushPin = new ImagePushpin(location);
             _map.Center = new Geopoint(location);
             MapControl.SetLocation(pushPin, _map.Center);
             _map.Children.Add(pushPin);
+#endif
+
         }
     }
 }

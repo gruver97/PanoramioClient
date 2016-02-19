@@ -13,6 +13,7 @@
 */
 
 using Microsoft.Practices.Unity;
+using PanoramioClient.Services;
 
 namespace PanoramioClient.ViewModel
 {
@@ -30,7 +31,8 @@ namespace PanoramioClient.ViewModel
         public ViewModelLocator()
         {
             _unityContainer.RegisterType<IMapViewModel, MapViewModel>()
-                .RegisterType<IPushpinViewModel, PushpinViewModel>();
+                .RegisterType<IPushpinViewModel, PushpinViewModel>()
+                .RegisterType<IPanoramioService, PanoramioService>();
         }
 
         public IMapViewModel MapViewModel => _unityContainer.Resolve<IMapViewModel>();
