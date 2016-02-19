@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Media.Imaging;
+using PanoramioClient.Enumerations;
 
 namespace PanoramioClient.ViewModel
 {
@@ -9,5 +10,6 @@ namespace PanoramioClient.ViewModel
     {
         ObservableCollection<BitmapImage> ThumbnailsImages { get; }
         Task LoadImagesAsync(BasicGeoposition location);
+        LoadingStatesEnumeration LoadingStates { get; }
     }
 }
