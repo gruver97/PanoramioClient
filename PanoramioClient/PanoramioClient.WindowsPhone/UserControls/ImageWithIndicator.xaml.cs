@@ -25,11 +25,12 @@ namespace PanoramioClient.UserControls
 
         private void Image_OnImageOpened(object sender, RoutedEventArgs e)
         {
-            var resutl = VisualStateManager.GoToState(this, "LoadedState", false);
+            VisualStateManager.GoToState(this, LoadedState.Name, false);
         }
 
         private void Image_OnImageFailed(object sender, ExceptionRoutedEventArgs e)
         {
+            VisualStateManager.GoToState(this, ErrorState.Name, false);
         }
     }
 }
