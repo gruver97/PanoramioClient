@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Media.Imaging;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.Unity;
 using PanoramioClient.Enumerations;
 using PanoramioClient.Services;
@@ -14,12 +16,20 @@ namespace PanoramioClient.ViewModel
     public class PushpinViewModel : ViewModelBase, IPushpinViewModel
     {
         private readonly IPanoramioService _panoramioService;
+        private readonly INavigationService _navigationService;
         private LoadingStatesEnumeration _loadingStates;
 
-        public PushpinViewModel([Dependency] IPanoramioService panoramioService)
+        public PushpinViewModel([Dependency] IPanoramioService panoramioService, [Dependency] INavigationService navigationService)
         {
             _panoramioService = panoramioService;
+            _navigationService = navigationService;
             ThumbnailsImages = new ObservableCollection<BitmapImage>();
+            NavigateToFullViewCommand = new RelayCommand<BitmapImage>(NavigateToFullView);
+        }
+
+        private void NavigateToFullView(BitmapImage navigationParameter)
+        {
+            _navigationService.NavigateTo("FullSizePhotoPage",navigationParameter);
         }
 
         public ObservableCollection<BitmapImage> ThumbnailsImages { get; }
@@ -63,5 +73,7 @@ namespace PanoramioClient.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        public RelayCommand<BitmapImage> NavigateToFullViewCommand { get; private set; }
     }
 }

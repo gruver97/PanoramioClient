@@ -26,9 +26,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UserControls\ImageWithIndicator.xaml.cs">
       <DependentUpon>ImageWithIndicator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\IMapViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\FullSizePhotoViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\IFullSizePhotoViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\IPushpinViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MapViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PushpinViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
   </ItemGroup>

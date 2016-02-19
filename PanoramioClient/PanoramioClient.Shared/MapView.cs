@@ -54,7 +54,6 @@ namespace PanoramioClient
         private void _map_MapTapped(MapControl sender, MapInputEventArgs args)
         {
             AddPushpin(args.Location.Position);
-            LocationTappedCommand?.Execute(args.Location.Position);
         }
 #endif
         private void _map_DoubleTappedOverride(object sender, DoubleTappedRoutedEventArgs e)
@@ -89,15 +88,6 @@ namespace PanoramioClient
         {
             get { return _map.ZoomLevel; }
             set { _map.ZoomLevel = value; }
-        }
-
-        public static readonly DependencyProperty LocationTappedCommandProperty = DependencyProperty.Register(
-            "LocationTappedCommand", typeof (ICommand), typeof (MapView), new PropertyMetadata(default(ICommand)));
-
-        public ICommand LocationTappedCommand
-        {
-            get { return (ICommand) GetValue(LocationTappedCommandProperty); }
-            set { SetValue(LocationTappedCommandProperty, value); }
         }
 
         private void AddPushpin(BasicGeoposition location)

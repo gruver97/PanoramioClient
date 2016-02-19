@@ -8,10 +8,10 @@
     x:Class="PanoramioClient.MainPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding Source={StaticResource Locator}, Path=MapViewModel}">
+    NavigationCacheMode="Required">
 
     <Grid>
-        <local:MapView x:Name="PanoramioMap" LocationTappedCommand="{Binding Path=LocationTappedCommand}">
+        <local:MapView x:Name="PanoramioMap">
         </local:MapView>
         <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15">
             <Border.Background>

@@ -80,6 +80,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="FullSizePhotoPage.xaml.cs">
+      <DependentUpon>FullSizePhotoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImagePushpin.xaml.cs">
       <DependentUpon>ImagePushpin.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
     <Content Include="Assets\WideLogo.scale-240.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="FullSizePhotoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImagePushpin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

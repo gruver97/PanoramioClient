@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.Unity;
 using PanoramioClient.Services;
 
@@ -30,13 +31,18 @@ namespace PanoramioClient.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
-            _unityContainer.RegisterType<IMapViewModel, MapViewModel>()
-                .RegisterType<IPushpinViewModel, PushpinViewModel>()
-                .RegisterType<IPanoramioService, PanoramioService>();
+            var navigationService = new NavigationService();
+#if WINDOWS_PHONE_APP
+            navigationService.Configure("FullSizePhotoPage", typeof(FullSizePhotoPage));
+#endif
+            _unityContainer.RegisterType<IPushpinViewModel, PushpinViewModel>()
+                .RegisterType<IFullSizePhotoViewModel, FullSizePhotoViewModel>()
+                .RegisterType<IPanoramioService, PanoramioService>()
+                .RegisterInstance<INavigationService>(navigationService);
         }
 
-        public IMapViewModel MapViewModel => _unityContainer.Resolve<IMapViewModel>();
         public IPushpinViewModel PushpinViewModel => _unityContainer.Resolve<PushpinViewModel>();
+        public IFullSizePhotoViewModel FullSizePhotoViewModel => _unityContainer.Resolve<IFullSizePhotoViewModel>();
 
     }
 }
