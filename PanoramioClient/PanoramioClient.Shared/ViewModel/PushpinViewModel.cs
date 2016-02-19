@@ -23,12 +23,15 @@ namespace PanoramioClient.ViewModel
         public ObservableCollection<BitmapImage> ThumbnailsImages { get; }
         public async Task LoadImagesAsync(BasicGeoposition location)
         {
-            var bounding = new BoundingBox(location,0.3,0.3);
+            var bounding = new BoundingBox(location,0.001,0.001);
             var result = await _panoramioService.GetImagesUrlAsync(bounding.MinX, bounding.MaxX, bounding.MinY, bounding.MaxY).ConfigureAwait(true);
             if (result != null)
             {
                 ThumbnailsImages.Clear();
-                ThumbnailsImages.Add(new BitmapImage(new Uri(result)));
+                foreach (var imageFile in result)
+                {
+                    ThumbnailsImages.Add(new BitmapImage(new Uri(imageFile)));
+                }
             }
         }
     }

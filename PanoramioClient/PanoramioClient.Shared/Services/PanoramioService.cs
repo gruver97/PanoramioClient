@@ -31,9 +31,9 @@ namespace PanoramioClient.Services
             GC.SuppressFinalize(this);
         }
 
-        public async Task<string> GetImagesUrlAsync(double minX, double maxX, double minY, double maxY)
+        public async Task<IEnumerable<string>> GetImagesUrlAsync(double minX, double maxX, double minY, double maxY)
         {
-            const string methodPart = "/map/get_panoramas.php?set=full&from=0&to=20&minx={0}&miny={1}&maxx={2}&maxy={3}&size=medium&mapfilter=true";
+            const string methodPart = "/map/get_panoramas.php?set=full&from=0&to=100&minx={0}&miny={1}&maxx={2}&maxy={3}&size=medium&mapfilter=true";
             try
             {
                 var requestAddress = new Uri(new Uri(PanoramioBaseAddress), string.Format(methodPart,minX,minY,maxX,maxY));
@@ -42,7 +42,7 @@ namespace PanoramioClient.Services
                 {
                     var jsonContent = await response.Content.ReadAsStringAsync();
                     var images = JObject.Parse(jsonContent)["photos"].ToObject<IEnumerable<PhotoDescription>>();
-                    return images?.FirstOrDefault().PhotoFileUrl;
+                    return images?.Select(image => image.PhotoFileUrl);
                 }
                 return null;
             }
