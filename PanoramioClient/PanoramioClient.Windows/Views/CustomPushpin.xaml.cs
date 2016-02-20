@@ -41,5 +41,10 @@ namespace PanoramioClient
             }
             e.Handled = true;
         }
+
+        private void LoadedImagesFlip_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

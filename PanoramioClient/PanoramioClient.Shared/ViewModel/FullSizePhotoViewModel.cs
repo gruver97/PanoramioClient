@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.Unity;
 using PanoramioClient.Enumerations;
+using Windows.Devices.Sensors;
 
 #if WINDOWS_PHONE_APP
 using Windows.Phone.UI.Input;

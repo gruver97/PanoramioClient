@@ -19,7 +19,7 @@
             <ProgressRing x:Name="ProgressRing" IsActive="True" Visibility="Collapsed" />
             <Image x:Name="ErrorImage" Visibility="Collapsed" Source="ms-appx:///Assets/noData.png"
                    Stretch="UniformToFill" />
-            <FlipView x:Name="LoadedImagesFlip" ItemsSource="{Binding Path=ThumbnailsImages}">
+            <FlipView x:Name="LoadedImagesFlip" ItemsSource="{Binding Path=ThumbnailsImages}" Tapped="LoadedImagesFlip_OnTapped">
                 <FlipView.ItemTemplate>
                     <DataTemplate>
                         <userControls:ImageWithIndicator Tapped="UIElement_OnTapped" ImageUri="{Binding Mode=TwoWay}">
