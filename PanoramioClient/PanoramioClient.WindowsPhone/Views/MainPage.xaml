@@ -9,7 +9,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Required">
-
+<Page.Resources>
+    <Style x:Key="ZoomButtonStyle" TargetType="Button">
+            <Setter Property="MinWidth" Value="40"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+        </Style>
+</Page.Resources>
     <Grid>
         <local:MapView x:Name="PanoramioMap">
         </local:MapView>
@@ -18,20 +23,10 @@
                 <SolidColorBrush Color="Black" Opacity="0.5"></SolidColorBrush>
             </Border.Background>
             <StackPanel Orientation="Vertical">
-                <Button Tapped="ZoomInButton_OnTapped">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="MinWidth" Value="40"></Setter>
-                        </Style>
-                    </Button.Style>
+                <Button Tapped="ZoomInButton_OnTapped" Style="{StaticResource ZoomButtonStyle}">
                     <SymbolIcon Symbol="Add"></SymbolIcon>
                 </Button>
-                <Button Tapped="ZoomOut_OnTapped">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="MinWidth" Value="40"></Setter>
-                        </Style>
-                    </Button.Style>
+                <Button Tapped="ZoomOut_OnTapped"  Style="{StaticResource ZoomButtonStyle}">
                     <SymbolIcon Symbol="Remove"/>
                 </Button>
             </StackPanel>

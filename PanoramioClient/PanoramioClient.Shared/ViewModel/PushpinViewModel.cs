@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,10 +41,7 @@ namespace PanoramioClient.ViewModel
             {
                 LoadingStates = LoadingStatesEnumeration.Loading;
                 var bounding = new BoundingBox(location, 0.01, 0.01);
-                var result =
-                    await
-                        _panoramioService.GetImagesUrlAsync(bounding.MinX, bounding.MaxX, bounding.MinY, bounding.MaxY)
-                            .ConfigureAwait(true);
+                var result = await DownloadImagesAsync(bounding).ConfigureAwait(true);
                 if (result != null && result.Any())
                 {
                     ThumbnailsImages.Clear();
@@ -56,11 +54,17 @@ namespace PanoramioClient.ViewModel
                 else 
                 LoadingStates = LoadingStatesEnumeration.Error;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 LoadingStates = LoadingStatesEnumeration.Error;
-
             }
+        }
+
+        private async Task<IEnumerable<string>> DownloadImagesAsync(BoundingBox bounding)
+        {
+            return await
+                _panoramioService.GetImagesUrlAsync(bounding.MinX, bounding.MaxX, bounding.MinY, bounding.MaxY)
+                    .ConfigureAwait(false);
         }
 
         public LoadingStatesEnumeration LoadingStates
